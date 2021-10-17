@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AccountComponent } from './pages/account/account.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -51,10 +53,12 @@ const routes: Routes = [
     NavbarComponent,
     NewComponent,
     ManageComponent,
-    AboutComponent
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forChild(routes),
     AppRoutingModule
   ],

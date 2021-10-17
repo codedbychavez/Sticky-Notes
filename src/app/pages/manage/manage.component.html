@@ -1,111 +1,31 @@
-
 <section class="section is-small">
-    <div class="columns is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
-        <div class="column">
-            <div class="card">
+    <button (click)="appendBlankSticky()" class="button mb-4 is-success has-text-weight-semibold">
+        <span class="icon is-small"><i class="bi-journal-plus" aria-hidden="true"></i></span>
+        <span>New</span>
+    </button>
+
+    <div #stickyColumns class="columns is-multiline">
+        <div *ngFor="let sticky of stickies; let i = index" class="column is-one-quarter">
+            <div [ngClass]="sticky.color" class="card">
                 <header class="card-header">
-                  <p class="card-header-title">
-                    Component
-                  </p>
-                  <button class="card-header-icon" aria-label="more options">
-                    <span class="icon">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
+                  <input (change)="saveTitle(sticky, $event)" [ngClass]="sticky.color" class="input sticky-title-input" type="text" value="{{ sticky.title }}">
                 </header>
-                <div class="card-content">
+                <div class="card-content pl-4">
                   <div class="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                    <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                    <br>
-                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                    <textarea (change)="saveContent(sticky, $event)" [ngClass]="sticky.color" class="textarea sticky-content-input">{{ sticky.content }}</textarea>
                   </div>
                 </div>
                 <footer class="card-footer">
-                  <a href="#" class="card-footer-item">Save</a>
-                  <a href="#" class="card-footer-item">Edit</a>
-                  <a href="#" class="card-footer-item">Delete</a>
-                </footer>
-              </div>
-        </div>
-        <div class="column">
-            <div class="card">
-                <header class="card-header">
-                  <p class="card-header-title">
-                    Component
-                  </p>
-                  <button class="card-header-icon" aria-label="more options">
-                    <span class="icon">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </header>
-                <div class="card-content">
-                  <div class="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                    <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                    <br>
-                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                  </div>
-                </div>
-                <footer class="card-footer">
-                  <a href="#" class="card-footer-item">Save</a>
-                  <a href="#" class="card-footer-item">Edit</a>
-                  <a href="#" class="card-footer-item">Delete</a>
-                </footer>
-              </div>
-        </div>
-        <div class="column">
-            <div class="card">
-                <header class="card-header">
-                  <p class="card-header-title">
-                    Component
-                  </p>
-                  <button class="card-header-icon" aria-label="more options">
-                    <span class="icon">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </header>
-                <div class="card-content">
-                  <div class="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                    <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                    <br>
-                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                  </div>
-                </div>
-                <footer class="card-footer">
-                  <a href="#" class="card-footer-item">Save</a>
-                  <a href="#" class="card-footer-item">Edit</a>
-                  <a href="#" class="card-footer-item">Delete</a>
-                </footer>
-              </div>
-        </div>
-        <div class="column">
-            <div class="card">
-                <header class="card-header">
-                  <p class="card-header-title">
-                    Component
-                  </p>
-                  <button class="card-header-icon" aria-label="more options">
-                    <span class="icon">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </header>
-                <div class="card-content">
-                  <div class="content">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-                    <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
-                    <br>
-                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-                  </div>
-                </div>
-                <footer class="card-footer">
-                  <a href="#" class="card-footer-item">Save</a>
-                  <a href="#" class="card-footer-item">Edit</a>
-                  <a href="#" class="card-footer-item">Delete</a>
+                  <a (click)="spliceSticky(sticky)" class="card-footer-item is-justify-content-left"><i class="bi bi-trash has-text-grey-darker"></i></a>
+                  <ul href="#" class="card-footer-item is-justify-content-right">
+                    <li (click)="changeStickyColor('yellow', sticky)" class="colorDot" style="background-color: #ffe08a;"></li>
+                    <li (click)="changeStickyColor('blue', sticky)" class="colorDot" style="background-color: #3e8ed0;"></li>
+                    <li (click)="changeStickyColor('purple', sticky)" class="colorDot" style="background-color: #905ac3;"></li>
+                    <li (click)="changeStickyColor('orange', sticky)" class="colorDot" style="background-color: #dc7756;"></li>
+
+                    <!-- #e95a2b -->
+                    <li (click)="changeStickyColor('white', sticky)" class="colorDot" style="background-color: whitesmoke;"></li>
+                  </ul>
                 </footer>
               </div>
         </div>
