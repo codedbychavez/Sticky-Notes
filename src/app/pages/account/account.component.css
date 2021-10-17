@@ -1,0 +1,4 @@
+.tabs ul li.is-active-tab a {
+    font-weight: bolder;
+    background-color: transparent;
+}

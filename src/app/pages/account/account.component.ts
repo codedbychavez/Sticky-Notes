@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  public showSignup: boolean;
+
+  constructor() { 
+    this.showSignup = false;
+  }
 
   ngOnInit(): void {
   }
