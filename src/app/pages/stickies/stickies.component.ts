@@ -5,11 +5,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-manage',
-  templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.css']
+  selector: 'app-stickies',
+  templateUrl: './stickies.component.html',
+  styleUrls: ['./stickies.component.css']
 })
-export class ManageComponent implements OnInit {
+export class StickiesComponent implements OnInit {
   @ViewChild('stickyColumns', { static: false })
   stickyColumns!: ElementRef;
 

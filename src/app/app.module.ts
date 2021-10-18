@@ -11,15 +11,15 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NewComponent } from './pages/new/new.component';
-import { ManageComponent } from './pages/manage/manage.component';
+import { StickiesComponent } from './pages/stickies/stickies.component';
 import { AboutComponent } from './pages/about/about.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { SignupFormComponent } from './components/signup-form/signup-form.component';
 
 const routes: Routes = [
   {
-    path: 'manage',
-    component: ManageComponent,
+    path: 'stickies',
+    component: StickiesComponent,
   },
   {
     path: 'new',
@@ -35,12 +35,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'manage',
+    redirectTo: 'stickies',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'manage',
+    redirectTo: 'stickies',
     pathMatch: 'full'
   }
 ]
@@ -54,7 +54,7 @@ const routes: Routes = [
     SideNavComponent,
     NavbarComponent,
     NewComponent,
-    ManageComponent,
+    StickiesComponent,
     AboutComponent,
     LoginFormComponent,
     SignupFormComponent,
