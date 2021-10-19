@@ -51,6 +51,21 @@ class getUser(APIView):
             return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+class deleteUser(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            userId = request.user.id
+            user = User.objects.get(id=userId)
+            user.delete()
+
+            user_message = 'Success deleting user'
+            print(user_message)
+            return Response(user_message, status=status.HTTP_200_OK)
+        except:
+            user_message = 'Error deleting user'
+            return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
+
 # Helper functions
 def createUser(userObject):
     userName = userObject['email']

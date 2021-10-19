@@ -20,7 +20,8 @@ from rest_framework.decorators import api_view, permission_classes
 class allSticky(APIView):
     def get(self, request, *args, **kwargs):
         try:
-            stickies = Sticky.objects.all()
+            userId = request.user.id
+            stickies = Sticky.objects.filter(created_by=userId).order_by('-id')
             sticky_serializer = StickySerializer(stickies, many=True)
             user_message = 'Success getting stickies'
             print(user_message)
@@ -34,6 +35,9 @@ class allSticky(APIView):
 class create(APIView):
     def post(self, request, *args, **kwargs):
         try:
+            # Append the user to the sticky
+            userId = request.user.id
+            request.data['created_by'] = userId
             print(request.data)
             sticky_serializer = StickySerializer(data=request.data)
             if sticky_serializer.is_valid():
@@ -53,6 +57,8 @@ class update(APIView):
     def post(self, request, *args, **kwargs):
         print(request.data)
         try:
+            userId = request.user.id
+            request.data['created_by'] = userId
             sticky_id = request.data['id']
             sticky_instance = Sticky.objects.get(id=sticky_id)
             sticky_serializer = StickySerializer(sticky_instance, data=request.data)
@@ -70,7 +76,7 @@ class update(APIView):
 class delete(APIView):
     def post(self, request, *args, **kwargs):
         try:
-            sticky_id = request.data
+            sticky_id = request.data['stickyId']
             sticky = Sticky.objects.get(id=sticky_id)
             sticky.delete()
             user_message = 'Success deleting sticky'

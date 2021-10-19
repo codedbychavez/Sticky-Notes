@@ -20,6 +20,10 @@
                     <strong>Congrats!</strong> Your account was created. Login to use the App.
                   </div>
 
+                  <div *ngIf="userAccountDeleted" class="notification is-warning">
+                    <strong>Heyy!</strong> Your account was deleted. Sign up again to use the App.
+                  </div>
+
                <app-login-form *ngIf="showLoginForm"></app-login-form>
 
                <app-signup-form *ngIf="!showLoginForm"></app-signup-form>
@@ -27,6 +31,13 @@
 
             <ng-template #loggedIn>
               <button (click)="logoutUser()" class="button is-warning has-text-weight-bold">Logout</button>
+
+              <h3 class="title is-size-5 has-text-weight-light mt-6 mb-3">Delete your Account</h3>
+
+              <button (click)="deleteUserAccount()" class="button is-danger is-small has-text-weight-bold">Delete Account</button>
+              <br>
+              <small class="has-text-warning">You won't be able to recover your stickies.</small>
+
             </ng-template>
 
             </div>

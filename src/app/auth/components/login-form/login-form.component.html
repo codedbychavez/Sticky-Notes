@@ -1,4 +1,9 @@
 <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit()" class="box">
+
+  <div *ngIf="error" class="notification is-danger">
+    <strong>Heyy!</strong> {{ error }}.
+  </div>
+
     <div class="field">
       <label class="label">Email</label>
       <div class="control">

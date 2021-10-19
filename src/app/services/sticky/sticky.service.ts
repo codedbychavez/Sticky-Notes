@@ -17,26 +17,26 @@ export class StickyService {
 
    createSticky(data: any) {
      return this.httpClient.post<any>(
-       this.baseUrl + '/sticky/create', data
+       this.baseUrl + '/sticky/create_sticky', data
      )
    } 
 
    updateSticky(data: any) {
     return this.httpClient.post<any>(
-      this.baseUrl + '/sticky/update', data
+      this.baseUrl + '/sticky/update_sticky', data
     )
   } 
 
   deleteSticky(stickyId: any) {
     return this.httpClient.post(
-      this.baseUrl + '/sticky/delete', stickyId
+      this.baseUrl + '/sticky/delete_sticky', {stickyId}
     )
   } 
 
   // TODO: Change to post for user
   getStickies() {
     return this.httpClient.get(
-      this.baseUrl + '/sticky/all',
+      this.baseUrl + '/sticky/all_sticky',
     )
   } 
 

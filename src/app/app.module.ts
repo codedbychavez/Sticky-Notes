@@ -26,28 +26,23 @@ import { SignupFormComponent } from './auth/components/signup-form/signup-form.c
 
 const routes: Routes = [
   {
-    path: 'about',
-    component: AboutComponent,
-    canActivate: [AuthGuardService]
-  },
-
-  {
     path: 'stickies',
     component: StickiesComponent,
     canActivate: [AuthGuardService]
   },
-
+  {
+    path: 'about',
+    component: AboutComponent,
+  },
   {
     path: 'account',
     component: AccountComponent
   },
-
   {
     path: '',
     component: AccountComponent,
     pathMatch: 'full'
   },
-  
 ]
 
 @NgModule({

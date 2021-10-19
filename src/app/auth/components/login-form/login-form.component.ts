@@ -15,12 +15,19 @@ export class LoginFormComponent implements OnInit {
 
   loginForm!: FormGroup;
   loginModel = new Login();
+  error!: string;
 
   constructor(private formBuilder: FormBuilder, 
     private authService: AuthService,
     public router: Router
     ) { 
       this.loginModel = new Login();
+
+      this.authService.errors$.subscribe(
+        (errorMessage) => {
+          this.error = errorMessage;
+        }
+      )
     }
 
   ngOnInit(): void {
@@ -50,6 +57,7 @@ export class LoginFormComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {
           console.log(err);
+          this.authService.errors.next(err.error.detail);
         }
       )
     }

@@ -19,18 +19,27 @@ export class AuthService {
 
   private check: any;
 
+  public userId: number;
+
+  public errors = new Subject<string>(); 
+  public errors$ = this.errors.asObservable();
+
   public userLoggedIn = new Subject<any>(); 
   public userLoggedIn$ = this.userLoggedIn.asObservable();
 
-  public showLoginForm = new Subject<any>(); 
+  public showLoginForm = new Subject<any>();
   public showLoginForm$ = this.showLoginForm.asObservable();
 
   public userAccountCreated = new Subject<any>(); 
-  public userAccountCreated$ = this.userAccountCreated.asObservable()
+  public userAccountCreated$ = this.userAccountCreated.asObservable();
+
+  public userAccountDeleted = new Subject<any>(); 
+  public userAccountDeleted$ = this.userAccountDeleted.asObservable();
 
   constructor(private httpClient: HttpClient, private router: Router, private injector: Injector) { 
     this.baseUrl = environment.restApi.uri;
     InjectorInstance = this.injector;
+    this.userId = 0;
   }
 
 
@@ -44,6 +53,14 @@ export class AuthService {
 
   updateUserAccountCreated(boolean: boolean) {
     this.userAccountCreated.next(boolean);
+  }
+
+  updateUserAccountDeleted(boolean: boolean) {
+    this.userAccountDeleted.next(boolean);
+  }
+
+  updateErrors(error: string) {
+    this.errors.next(error);
   }
 
   // login
@@ -68,6 +85,9 @@ export class AuthService {
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
     }
     const decodedToken = this.decodeToken(authResponse.access);
+
+    // Set user id
+    this.userId = decodedToken.user_id;
 
     const token = authResponse.access;
     const expiresAt = moment().add(decodedToken.exp,'second');
@@ -137,6 +157,10 @@ export class AuthService {
 
   }
 
+  getUserId() {
+    return this.userId;
+  }
+
 
   // Login user in
   checkAuthCredsAgainstApi(data: any) {
@@ -144,6 +168,20 @@ export class AuthService {
       this.baseUrl + '/api/token/', data
     );
   }
+
+  // Gets user by Id
+  getUser(userId: number) {
+    return this.httpClient.post<any>(
+      this.baseUrl + '/user/get_user', {userId}
+    )
+  }
+
+    // Login user in
+    deleteUserAccount() {
+      return this.httpClient.post<any>(
+        this.baseUrl + '/user/delete_user', {}
+      );
+    }
 
   askForNewAccessTokenUsingRefeshToken(refresh_token: any) {
     let formData = new FormData();
