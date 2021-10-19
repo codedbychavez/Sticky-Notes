@@ -7,6 +7,7 @@ gevent==21.8.0
 gevent-socketio==0.2.1
 gevent-websocket==0.10.1
 greenlet==1.1.1
+gunicorn==20.1.0
 psycopg2==2.9.1
 pytz==2021.1
 sphinx-me==0.3
