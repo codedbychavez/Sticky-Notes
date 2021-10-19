@@ -48,8 +48,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'api',
-    'django_createsuperuserwithpassword',
 ]
+
+INSTALLED_APPS += ("django_createsuperuserwithpassword", )
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
