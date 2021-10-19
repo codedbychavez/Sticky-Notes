@@ -29,6 +29,7 @@ urlpatterns = [
 
     # paths to apps
     path('sticky/', include('api.urls')),
-    # path('user/', include('user.urls')),
+    path('validator/', include('validator.urls')),
+    path('user/', include('user.urls')),
 
 ]

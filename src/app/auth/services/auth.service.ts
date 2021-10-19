@@ -1,18 +1,49 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
+
+import * as moment from "moment";
+import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+import { Injector } from '@angular/core';
+import { Subject } from 'rxjs';
+
+export let InjectorInstance: Injector;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private baseUrl: string;
 
-  constructor() { 
+  private check: any;
+
+  public userLoggedIn = new Subject<any>(); 
+  public userLoggedIn$ = this.userLoggedIn.asObservable();
+
+  public showLoginForm = new Subject<any>(); 
+  public showLoginForm$ = this.showLoginForm.asObservable();
+
+  public userAccountCreated = new Subject<any>(); 
+  public userAccountCreated$ = this.userAccountCreated.asObservable()
+
+  constructor(private httpClient: HttpClient, private router: Router, private injector: Injector) { 
     this.baseUrl = environment.restApi.uri;
+    InjectorInstance = this.injector;
   }
 
 
-  checkIfUserLoggedIn(): boolean {
-    return this.userLoggedIn;
+  updateUserLoggedIn(boolean: boolean) {
+    this.userLoggedIn.next(boolean);
+  }
+
+  updateShowLoginForm(boolean: boolean) {
+    this.showLoginForm.next(boolean);
+  }
+
+  updateUserAccountCreated(boolean: boolean) {
+    this.userAccountCreated.next(boolean);
   }
 
   // login
@@ -27,30 +58,23 @@ export class AuthService {
     localStorage.removeItem("refresh_token");
 
     localStorage.removeItem("expires_at");
-    this.router.navigate(['auth']);
-    this.userLoggedIn = false;
+    this.router.navigate(['account']);
+    this.updateUserLoggedIn(false);
   }
 
   setSession(authResponse:any) {
     if(authResponse.refresh) {
       const refreshToken = authResponse.refresh;
       localStorage.setItem('refresh_token', JSON.stringify(refreshToken));
-      // const decodedRefreshToken = this.decodeToken(authResponse.refresh);
-      // const refreshTokenWillExpAt = new Date(decodedRefreshToken.exp * 1000);
-      // console.log('Refresh token will expire at: ', refreshTokenWillExpAt);
-
-
     }
     const decodedToken = this.decodeToken(authResponse.access);
+
     const token = authResponse.access;
     const expiresAt = moment().add(decodedToken.exp,'second');
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-
-    // const tokenWillExpAt = new Date(decodedToken.exp * 1000);
-    // console.log('Token will expire at: ', tokenWillExpAt);
     localStorage.setItem("token", JSON.stringify(token));
-    this.router.navigate(['home']);
-    this.userLoggedIn = true;
+    this.router.navigate(['stickies']);
+    this.updateUserLoggedIn(true);
   }
 
   getAccessTokenWithRefreshToken() {
@@ -58,6 +82,7 @@ export class AuthService {
 
     this.askForNewAccessTokenUsingRefeshToken(refreshToken).subscribe(
       (authResponse) => {
+        console.log(authResponse)
         
         this.setSession(authResponse);
       },
@@ -103,9 +128,9 @@ export class AuthService {
     let token = this.getToken();
     // jwtHelper.isTokenExpired returns false when token is not expired but true if it is
     // Hence we flip the below and return thw opposite of the result
-    if(!jwtHelper.isTokenExpired(token)) {
+    if(jwtHelper.isTokenExpired(token)) {
       this.getAccessTokenWithRefreshToken();
-      token = this.getToken();
+      // token = this.getToken();
     }
 
     return !jwtHelper.isTokenExpired(token);

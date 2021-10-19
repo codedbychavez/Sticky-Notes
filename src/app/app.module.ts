@@ -2,71 +2,79 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { JwtModule } from "@auth0/angular-jwt";
+import { AuthService } from './auth/services/auth.service';
+import { AuthInterceptor } from './auth/interceptor/auth-interceptor';
+
+// Auth Guard
+import { AuthGuardService } from './auth/services/auth-guard.service';
+
+// Components
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { AccountComponent } from './pages/account/account.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { NewComponent } from './pages/new/new.component';
-import { StickiesComponent } from './pages/stickies/stickies.component';
 import { AboutComponent } from './pages/about/about.component';
-import { LoginFormComponent } from './components/login-form/login-form.component';
-import { SignupFormComponent } from './components/signup-form/signup-form.component';
+import { StickiesComponent } from './pages/stickies/stickies.component';
+import { LoginFormComponent } from './auth/components/login-form/login-form.component';
+import { SignupFormComponent } from './auth/components/signup-form/signup-form.component';
 
 const routes: Routes = [
   {
+    path: 'about',
+    component: AboutComponent,
+    canActivate: [AuthGuardService]
+  },
+
+  {
     path: 'stickies',
     component: StickiesComponent,
+    canActivate: [AuthGuardService]
   },
-  {
-    path: 'new',
-    component: NewComponent
-  },
-  {
-    path: 'about',
-    component: AboutComponent
-  },
+
   {
     path: 'account',
     component: AccountComponent
   },
+
   {
     path: '',
-    redirectTo: 'stickies',
+    component: AccountComponent,
     pathMatch: 'full'
   },
-  {
-    path: '**',
-    redirectTo: 'stickies',
-    pathMatch: 'full'
-  }
+  
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    AccountComponent,
     HeroComponent,
     FooterComponent,
     SideNavComponent,
     NavbarComponent,
-    NewComponent,
     StickiesComponent,
     AboutComponent,
+    AccountComponent,
     LoginFormComponent,
     SignupFormComponent,
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forChild(routes),
-    AppRoutingModule
+    JwtModule,
+    AppRoutingModule,
+    RouterModule.forRoot(routes),
   ],
-  providers: [],
+  providers: [AuthService,
+  {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

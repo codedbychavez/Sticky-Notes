@@ -3,27 +3,44 @@
       <p class="title ">
         My Account
       </p>
+      
       <div class="content">
-    
-        <div class="columns is-multiline">
+          <div class="columns is-multiline">
             <div class="column is-three-quarters-tablet is-one-third-widescreen">
+            
+              <div *ngIf="!userLoggedIn; else loggedIn">
                 <div class="tabs">
                     <ul class="ml-0">
-                      <li [ngClass]="{'is-active-tab': !showSignup}" (click)="showSignup = false"><a class="pl-0">Login</a></li>
-                      <li [ngClass]="{'is-active-tab': showSignup}" (click)="showSignup = true"><a>Sign up</a></li>
+                      <li [ngClass]="{'is-active-tab': showLoginForm}" (click)="showLoginFormFunction(true)"><a class="pl-0">Login</a></li>
+                      <li [ngClass]="{'is-active-tab': !showLoginForm}" (click)="showLoginFormFunction(false)"><a>Sign up</a></li>
                     </ul>
                   </div>
 
-               <app-login-form *ngIf="!showSignup"></app-login-form>
+                  <div *ngIf="userAccountCreated" class="notification is-success">
+                    <strong>Congrats!</strong> Your account was created. Login to use the App.
+                  </div>
 
-               <app-signup-form *ngIf="showSignup"></app-signup-form>
+               <app-login-form *ngIf="showLoginForm"></app-login-form>
+
+               <app-signup-form *ngIf="!showLoginForm"></app-signup-form>
+            </div>
+
+            <ng-template #loggedIn>
+              <button (click)="logoutUser()" class="button is-warning has-text-weight-bold">Logout</button>
+            </ng-template>
+
+            </div>
+
+            <div class="column">
             </div>
             <div class="column">
             </div>
-            <div class="column"></div>
           </div>
+        </div>
 
-      </div>
+
+
+
     </div>
   </section>
 

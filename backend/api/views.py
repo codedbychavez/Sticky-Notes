@@ -16,7 +16,7 @@ from rest_framework.decorators import api_view, permission_classes
 
 # Create your views here.
 
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 class allSticky(APIView):
     def get(self, request, *args, **kwargs):
         try:
@@ -30,6 +30,7 @@ class allSticky(APIView):
             return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
 
 
+@permission_classes([IsAuthenticated])
 class create(APIView):
     def post(self, request, *args, **kwargs):
         try:
@@ -47,7 +48,7 @@ class create(APIView):
             return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
 
 
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 class update(APIView):
     def post(self, request, *args, **kwargs):
         print(request.data)
@@ -65,7 +66,7 @@ class update(APIView):
             return Response(user_message, status=status.HTTP_400_BAD_REQUEST)
 
 
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 class delete(APIView):
     def post(self, request, *args, **kwargs):
         try:

@@ -4,5 +4,6 @@ from .views import *
 urlpatterns = [
 
     # Project paths
-    path('create', create.as_view()),
+    path('email', emailValidator.as_view()),
+
 ]
