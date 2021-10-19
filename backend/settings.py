@@ -33,6 +33,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "http://localhost:4300",
     "http://localhost:90",
+    "https://codedbychavez-stickynotesapp.netlify.app",
 ]
 
 
