@@ -13,4 +13,11 @@ Create and organize your stickies on the go. This app allows you to keep your st
 ### Account Page
 
 #### Login
+##### If user is already logged in:
+
+![image](https://user-images.githubusercontent.com/74829200/138074124-abaaf232-79c9-4ba9-99cd-f431edb38543.png)
+
+
+##### If user is not logged in:
+![image](https://user-images.githubusercontent.com/74829200/138074271-7679d3f1-93c4-4d43-9cc4-e54657eabe8f.png)
 
