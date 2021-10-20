@@ -21,3 +21,5 @@ Create and organize your stickies on the go. This app allows you to keep your st
 ##### If user is not logged in:
 ![image](https://user-images.githubusercontent.com/74829200/138074271-7679d3f1-93c4-4d43-9cc4-e54657eabe8f.png)
 
+##### Sign up form
+![image](https://user-images.githubusercontent.com/74829200/138102670-06b7ffc4-d0c3-4ea0-a716-4571c19724ec.png)
